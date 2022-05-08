@@ -58,7 +58,7 @@ offline = false
 publik = true
 targetpc = '6289515233398'
 owner = '6289515233398'
-fake = 'Viracanz Xiixi>< '
+fake = 'Saya jlelkk tapi jelekan kamuu'
 numbernye = '0'
 waktu = '-'
 alasan = '-'
@@ -104,11 +104,10 @@ module.exports = hexa = async (hexa, mek) => {
         const conts = mek.key.fromMe ? hexa.user.jid : hexa.contacts[sender] || { notify: jid.replace(/@.+/, '') }
         const pushname = mek.key.fromMe ? hexa.user.name : conts.notify || conts.vname || conts.name || '-'
 
-
         //MESS
 		mess = {
-			wait: '_⏳ Please Wait a little Longer..._',
-			success: '*✅ Successfully Complete!*',
+			wait: '_Please Wait..._',
+			success: 'Success',
 			wrongFormat: '*❌ Format Salah Silahkan Coba Lagi*',
 			error: {
 				stick: '*❌ Please Chose Sticker Only*',
@@ -133,7 +132,7 @@ module.exports = hexa = async (hexa, mek) => {
         const mentions = (teks, memberr, id) => {
             (id == null || id == undefined || id == false) ? hexa.sendMessage(from, teks.trim(), extendedText, { contextInfo: { "mentionedJid": memberr } }) : hexa.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": memberr } })
         }
-
+  
         const fakestatus = (teks) => {
             hexa.sendMessage(from, teks, text, {
                 quoted: {
@@ -191,279 +190,6 @@ module.exports = hexa = async (hexa, mek) => {
                 }
             })
         }
+        const fdoc = {key : {participant : '0@s.whatsapp.net'},message: {documentMessage: {title: `Deviraa Cntik`,jpegThumbnail: fs.readFileSync(`./stik/ppfake.jpeg`)}}}
         const sendStickerFromUrl = async(to, url) => {
                 var names = Date.now() / 10000;
-                var download = function (uri, filename, callback) {
-                    request.head(uri, function (err, res, body) {
-                        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-                    });
-                };
-                download(url, './stik' + names + '.png', async function () {
-                    console.log('selesai');
-                    let filess = './stik' + names + '.png'
-                    let asw = './stik' + names + '.webp'
-                    exec(`ffmpeg -i ${filess} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${asw}`, (err) => {
-                        let media = fs.readFileSync(asw)
-                        hexa.sendMessage(to, media, MessageType.sticker,{quoted:mek})
-                        fs.unlinkSync(filess)
-                        fs.unlinkSync(asw)
-                    });
-                });
-            }
-        const sendMediaURL = async(to, url, text="", mids=[]) =>{
-                if(mids.length > 0){
-                    text = normalizeMention(to, text, mids)
-                }
-                const fn = Date.now() / 10000;
-                const filename = fn.toString()
-                let mime = ""
-                var download = function (uri, filename, callback) {
-                    request.head(uri, function (err, res, body) {
-                        mime = res.headers['content-type']
-                        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-                    });
-                };
-                download(url, filename, async function () {
-                    console.log('done');
-                    let media = fs.readFileSync(filename)
-                    let type = mime.split("/")[0]+"Message"
-                    if(mime === "image/gif"){
-                        type = MessageType.video
-                        mime = Mimetype.gif
-                    }
-                    if(mime.split("/")[0] === "audio"){
-                        mime = Mimetype.mp4Audio
-                    }
-                    hexa.sendMessage(to, media, type, { quoted: mek, mimetype: mime, caption: text,contextInfo: {"mentionedJid": mids}})
-                    
-                    fs.unlinkSync(filename)
-                });
-            }   
-//
-//========================================================================================================================//
-		colors = ['red', 'white', 'black', 'blue', 'yellow', 'green']
-		const isMedia = (type === 'imageMessage' || type === 'videoMessage')
-		const isQuotedImage = type === 'extendedTextMessage' && content.includes('imageMessage')
-		const isQuotedVideo = type === 'extendedTextMessage' && content.includes('videoMessage')
-		const isQuotedAudio = type === 'extendedTextMessage' && content.includes('audioMessage')
-		const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
-      	if (!isGroup && isCmd) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(command), 'from', color(sender.split('@')[0]), 'args :', color(args.length))
-      	//if (!isGroup && !isCmd) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;31mTEXT\x1b[1;37m]', time, color('Message'), 'from', color(sender.split('@')[0]), 'args :', color(args.length))
-     	if (isCmd && isGroup) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(command), 'from', color(sender.split('@')[0]), 'in', color(groupName), 'args :', color(args.length))
-      	//if (!isCmd && isGroup) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;31mTEXT\x1b[1;37m]', time, color('Message'), 'from', color(sender.split('@')[0]), 'in', color(groupName), 'args :', color(args.length))
-	    if(isGroup && !isVote) {
-        if (budy.toLowerCase() === 'vote'){
-        let vote = JSON.parse(fs.readFileSync(`./lib/${from}.json`))
-        let _votes = JSON.parse(fs.readFileSync(`./lib/vote/${from}.json`))  
-        let fil = vote.map(v => v.participant)
-        let id_vote = sender ? sender : '6289515233398@s.whatsapp.net'
-        if(fil.includes(id_vote)) {
-        return mentions('@'+sender.split('@')[0]+' Anda sudah vote', fil, true)
-        } else {
-        vote.push({
-            participant: id_vote,
-            voting: '✅'
-        })
-        fs.writeFileSync(`./lib/${from}.json`,JSON.stringify(vote))
-        let _p = []
-        let _vote = '*Vote* '+ '@'+ _votes[0].votes.split('@')[0] + `\n\n*Alasan*: ${_votes[0].reason}\n*Jumlah Vote* : ${vote.length} Vote\n*Durasi* : ${_votes[0].durasi} Menit\n\n` 
-        for(let i = 0; i < vote.length; i++) {
-        _vote +=  `@${vote[i].participant.split('@')[0]}\n*Vote* : ${vote[i].voting}\n\n`
-        _p.push(vote[i].participant)
-        }  
-        _p.push(_votes[0].votes)
-        mentions(_vote,_p,true)   
-        }
-        } else if (budy.toLowerCase() === 'devote'){
-        const vote = JSON.parse(fs.readFileSync(`./lib/${from}.json`))
-        let _votes = JSON.parse(fs.readFileSync(`./lib/vote/${from}.json`))  
-        let fil = vote.map(v => v.participant)
-        let id_vote = sender ? sender : '62@s.whatsapp.net'
-        if(fil.includes(id_vote)) {
-        return mentions('@'+sender.split('@')[0]+' Anda sudah vote', fil, true)
-        } else {
-        vote.push({
-            participant: id_vote,
-            voting: '❌'
-        })
-        fs.writeFileSync(`./lib/${from}.json`,JSON.stringify(vote))
-        let _p = []
-        let _vote = '*Vote* '+ '@'+ _votes[0].votes.split('@')[0] + `\n\n*Alasan*: ${_votes[0].reason}\n*Jumlah Vote* : ${vote.length} Vote\n*Durasi* : ${_votes[0].durasi} Menit\n\n` 
-        for(let i = 0; i < vote.length; i++) {
-        _vote +=  `@${vote[i].participant.split('@')[0]}\n*Vote* : ${vote[i].voting}\n\n`
-        _p.push(vote[i].participant)
-        }  
-        _p.push(_votes[0].votes)
-        mentions(_vote,_p,true)   
-        }
-    }
-}	
-        if (!mek.key.fromMe && banChats === true) return
-switch (command) {
-    case 'awksituu':
-    if(mek.key.fromMe) return fakestatus('Tidak bisa jadibot di dalam bot')
-    jadibot(reply,hexa,from)
-    break
-    case 'lopoyodo':
-    if(mek.key.fromMe)return fakestatus('tidak bisa stopjadibot kecuali owner')
-    stopjadibot(reply)
-    break
-    case 'iplol':
-    let tekss = '「 *LIST JADIBOT* 」\n'
-    for(let i of listjadibot) {
-    tekss += `*Nomor* : ${i.jid.split('@')[0]}
-*Nama* : ${i.name}
-*Device* : ${i.phone.device_manufacturer}
-*Model* : ${i.phone.device_model}\n\n`
-    }
-    reply(tekss)
-    break
-    case 'listmenu':
-  
-var menu = `_Hai Sayonara,${pushname}👋_
-*List Menu Bot Hosting Viracanz🐹*
-
-*1.termintedefault*
-*2.addpackage*
-*3.listdomain*
-*4.domain*
-*5.cekdefault*
-*6.ceksmtp*
-*7.cekserver*
-*8.crateaccount*
-
-_Notes: Jika Ingin Sewa/Beli Chat Onwer Bot_
-`
-        	fakestatus(menu)
-        	break
-    case "domain":
-    return fakestatus('*Mode Private Aktif! ID Group Not Detect*')
-    break
-    case "addpackage":
-    return fakestatus('*Mode Private Aktif! ID Group Not Detect*')
-    break
-    case "termintedefault":
-    return fakestatus('*Mode Private Aktif! ID Group Not Detect*')
-    break
-    case "cekdefault":
-    return fakestatus('*Mode Private Aktif! ID Group Not Detect*')
-    break
-    case "cekserver":
-    return fakestatus('*Mode Private Aktif! ID Group Not Detect*')
-    break
-    case "ceksmtp":
-    return fakestatus('*Mode Private Aktif! ID Group Not Detect*')
-    break
-    case "listdomain":
-    return fakestatus('*Mode Private Aktif! ID Group Not Detect*')
-    break
-    case "crateaccount":
-    return fakestatus('*Mode Private Aktif! ID Group Not Detect*')
-    break
-    case 'hentai':
-              getBuffer(`https://viraadwifdlh.herokuapp.com/api/nsfw/hentai?apikey=apiviradev`).then((gambar) => {
-              hexa.sendMessage(from, gambar, image, { quoted: mek })
-       }) 
-           break
-           case 'ass':
-              getBuffer(`https://viraadwifdlh.herokuapp.com/api/nsfw/ass?apikey=apiviradev`).then((gambar) => {
-              hexa.sendMessage(from, gambar, image, { quoted: mek })
-       }) 
-       case 'bc':
-                    if (sender.split("@")[0] != owner) return fakestatus("Onwer Only!")
-                    list_chat = await hexa.chats.all()
-                    ini_text = args.join(" ")
-                    for (let chat of list_chat) {
-                        sendMess(chat.jid, ini_text)
-                    }
-                    break
-               case 'idml':
-                    if (args.length == 0) return fakestatus(`Example: ${prefix + command} 84830127/2169`)
-                    ml_id = args[0]
-                    get_result = await fetchJson(`https://api.lolhuman.xyz/api/mobilelegend/${ml_id}?apikey=3f56f3c5799ae89c6d0f9c96`)
-                    fakestatus(get_result.result)
-                    break
-           case 'ssweb':
-if (args.length < 1) return fakestatus('*Masukaan Link Website!*')
-teks = q
-anu = await fetchJson(`https://shot.screenshotapi.net/screenshot?&url=${teks}`)
-buff = await getBuffer(anu.screenshot)
-hexa.sendMessage(from, buff, image, {quoted: froxx, caption : teks})
-break
-    case 'ytmp3':
-			if (args.length === 0) return fakestatus(`Kirim Perintah *${prefix}ytmp3 <linkyt>*`)
-			let isLinks = args[0].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
-			if (!isLinks) return fakestatus(mess.error.Iv)
-				try {
-				fakestatus(mess.wait)
-				yta(args[0])
-				.then((res) => {
-				const { dl_link, thumb, title, filesizeF, filesize } = res
-				axios.get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
-				.then((a) => {
-			    if (Number(filesize) >= 30000) return sendMediaURL(from, thumb, `*Data Berhasil Didapatkan!*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_Untuk durasi lebih dari batas disajikan dalam mektuk link_`)
-				const captions = `*YTMP3*\n\n*Title* : ${title}\n*Ext* : MP3\n*Size* : ${filesizeF}\n\n*Please Wait..Media Sedang Di Kirim!* `
-				sendMediaURL(from, thumb, captions)
-				sendMediaURL(from, dl_link).catch(() => fakestatus(mess.error.api))
-				})
-				})
-				} catch (err) {
-				fakestatus(mess.error.api)
-				}
-				break
-                    case 'xnxxsearch':
-                    if (args.length == 0) return fakestatus(`Example: .xnnxsearch Japanese`)
-                    query = args.join(" ")
-                    get_result = await fetchJson(`https://deviraanj.herokuapp.com/api/downloader/xnxx?query=${query}&apikey=apivira`)
-                    get_result = get_result.result
-                    ini_txt = ""
-                    for (var x of get_result) {
-                        ini_txt += `Duration : ${x.info}\n`
-                        ini_txt += `Link : ${x.link}\n`
-                    }
-                    fakestatus(ini_txt)
-                    break
-    case 'public':
-          	if (!mek.key.fromMe) return fakestatus('Nabilla Cantig')
-          	if (banChats === false) return
-          	// var taged = ben.message.extendedTextMessage.contextInfo.mentionedJid[0]
-          	banChats = false
-          	fakestatus(`*🐹 Done Sucesss*`)
-          	break
-	case 'ping':
-			const timestamp = speed();
-			const latensi = speed() - timestamp
-			exec(`neofetch --stdout`, (error, stdout, stderr) => {
-			const child = stdout.toString('utf-8')
-			const teks = child.replace(/Memory:/, "Ram:")
-			const pingnya = `*${teks}Speed: ${latensi.toFixed(4)} Seconds*`
-			fakestatus(pingnya)
-			})
-			break  
-default:
-if (budy.startsWith('x')){
-try {
-return hexa.sendMessage(from, JSON.stringify(eval(budy.slice(2)),null,'\t'),text, {quoted: mek})
-} catch(err) {
-e = String(err)
-reply(e)
-}
-}  
-
-	}
-if (isGroup && budy != undefined) {
-	} else {
-	console.log(color('[TEXT]', 'red'), 'Viraa-BOT', color(sender.split('@')[0]))
-	}		
-	} catch (e) {
-    e = String(e)
-    if (!e.includes("this.isZero") && !e.includes("jid")) {
-	console.log('Message : %s', color(e, 'green'))
-        }
-	// console.log(e)
-	}
-}
-
-
-	
-    
